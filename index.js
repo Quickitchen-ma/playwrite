@@ -15,7 +15,7 @@ app.get('/scrape-binance-announcements', async (req, res) => {
         // Set a realistic user-agent to mimic a real browser
         await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.88 Safari/537.36');
 
-        await page.goto('https://www.binance.com/en/support/announcement/c-48', { waitUntil: 'domcontentloaded' });
+        await page.goto('https://www.binance.com/en/support/announcement/list/48', { waitUntil: 'domcontentloaded' });
 
         // Wait for the specific JavaScript challenge to resolve or content to appear
         // This is crucial. You might need to adjust the waiting strategy.

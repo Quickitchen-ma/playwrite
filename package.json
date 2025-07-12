@@ -1,0 +1,16 @@
+{
+  "name": "binance-scraper-service",
+  "version": "1.0.0",
+  "description": "A Playwright service to scrape Binance announcements.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.19.2",
+    "playwright": "^1.45.0"
+  }
+}

@@ -1,13 +1,10 @@
 # Use a Node.js base image. 'bullseye-slim' is a good choice for stability and size.
-# Playwright's documentation often recommends a Debian-based image for broad compatibility.
 FROM node:18-bullseye-slim
 
 # Set the working directory inside the container
 WORKDIR /app
 
 # Install Playwright's required system dependencies
-# These are essential for Chromium to run headless in a lean environment.
-# This list is comprehensive and derived from Playwright's own documentation for Debian/Ubuntu.
 RUN apt-get update && apt-get install -y --no-install-recommends \
     ca-certificates \
     fonts-liberation \
@@ -47,21 +44,22 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && apt-get clean
 
 # Copy package.json and package-lock.json to leverage Docker caching
-# This step is done separately so npm install isn't re-run if only app code changes
 COPY package*.json ./
 
 # Install Node.js dependencies
 RUN npm install
 
-# Install Playwright browsers (Chromium specifically, as per your postinstall script)
-# This explicitly downloads the browser binaries into node_modules
+# Install Playwright browsers (Chromium specifically)
 RUN npx playwright install chromium
+
+# *** ADD THIS LINE TO EXPLICITLY SET THE PLAYWRIGHT BROWSER PATH ***
+ENV PLAYWRIGHT_BROWSERS_PATH=/root/.cache/ms-playwright
 
 # Copy the rest of your application code
 COPY . .
 
-# Set the port your Express app listens on (ensure this matches your app.listen(PORT))
-ENV PORT 3000
+# Set the port your Express app listens on
+ENV PORT=3000
 EXPOSE 3000
 
 # Define the command to start your application

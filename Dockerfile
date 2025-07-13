@@ -1,6 +1,6 @@
 # Use a Node.js base image. 'bullseye-slim' is a good choice for stability and size.
 FROM node:18-bullseye-slim
-# Force rebuild - 2025-07-13
+# Force rebuild - 2025-07-13 (You can update this comment with current date/time for easy tracking)
 
 # Set the working directory inside the container
 WORKDIR /app
@@ -50,11 +50,12 @@ COPY package*.json ./
 # Install Node.js dependencies
 RUN npm install
 
-# Install Playwright browsers (Chromium specifically)
-RUN npx playwright install chromium
-
-# *** ADD THIS LINE TO EXPLICITLY SET THE PLAYWRIGHT BROWSER PATH ***
+# *** MOVED THIS LINE UP TO FORCE RE-EXECUTION OF PLAYWRIGHT INSTALL ***
 ENV PLAYWRIGHT_BROWSERS_PATH=/root/.cache/ms-playwright
+
+# Install Playwright browsers (Chromium specifically)
+# This step should now be forced to re-run because the ENV instruction changed above it.
+RUN npx playwright install chromium
 
 # Copy the rest of your application code
 COPY . .

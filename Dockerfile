@@ -1,5 +1,6 @@
 # Use a Node.js base image. 'bullseye-slim' is a good choice for stability and size.
 FROM node:18-bullseye-slim
+# Force rebuild - 2025-07-13
 
 # Set the working directory inside the container
 WORKDIR /app
